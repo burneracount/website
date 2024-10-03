@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stats Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_progress.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.0.1/build/global/luxon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.0.0"></script>
+</head>
+<body>
+<div class="navbar">
+    <div class="top-bar">
+        <a href="{{ url_for('user_page') }}">Home</a>
+        <a href="{{ url_for('progress') }}">Progress</a>
+        <a href="{{ url_for('stats') }}">Stats</a>
+        <a href="{{ url_for('kcal_calculator') }}">Kcal Calculator</a>
+        <a href="{{ url_for('my_page') }}">My Page</a>
+        <a href="{{ url_for('history') }}">History</a>
+    </div>
+    <div class="login-box">
+        <a class="btn" href="{{ url_for('sign_out') }}">Sign Out</a>
+    </div>
+</div>
+<div class="container">
+    <h1>Progress</h1>
+    <div class="content">
+        <div class="holder">
+            <div class="progress-content">
+                <p>Progress Graph</p>
+                <div class="graph-holder">
+                    <canvas id="progressChart"></canvas>
+                </div>
+                <div>
+                    <select id="progress-type-select">
+                        <option value="mass" {% if selected_progress_type == 'mass' %}selected{% endif %}>Mass</option>
+                        <option value="pr_chest" {% if selected_progress_type == 'pr_chest' %}selected{% endif %}>Chest PR</option>
+                        <option value="pr_deadlift" {% if selected_progress_type == 'pr_deadlift' %}selected{% endif %}>Deadlift PR</option>
+                        <option value="pr_squat" {% if selected_progress_type == 'pr_squat' %}selected{% endif %}>Squat PR</option>
+                        <option value="fat_percentage" {% if selected_progress_type == 'fat_percentage' %}selected{% endif %}>Body Fat Percentage</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <h1>Add progress</h1>
+        <div class="holder">
+            <div class="progress-content">
+                <div class="form-container">
+                    <form action="{{ url_for('progress') }}" method="POST">
+                        <label for="infoInput">Enter Value:</label>
+                        <input type="number" id="infoInput" name="inputNumber" required>
+
+                        <label for="selectOptions">Choose a progress type:</label>
+                        <select id="selectOptions" name="selectOptions" required>
+                            <option value="mass">Mass</option>
+                            <option value="pr_chest">Chest PR</option>
+                            <option value="pr_deadlift">Deadlift PR</option>
+                            <option value="pr_squat">Squat PR</option>
+                            <option value="fat_percentage">Body Fat Percentage</option>
+                        </select>
+
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/progress.js') }}"></script>
+
+</body>
+</html>
